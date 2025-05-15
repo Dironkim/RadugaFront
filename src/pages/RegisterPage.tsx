@@ -7,6 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { register } from "@/api/auth";
+import { useNavigate } from "react-router-dom";
+
 
 const formSchema = z.object({
   email: z.string().email("Неверный email"),
@@ -17,11 +20,14 @@ const formSchema = z.object({
   path: ["confirmPassword"],
 })
 
+
+
+
 type FormData = z.infer<typeof formSchema>
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false)
-
+  const navigate = useNavigate();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,21 +38,19 @@ export default function RegisterPage() {
   })
 
   async function onSubmit(values: FormData) {
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: values.email, password: values.password }),
-      })
-      if (!res.ok) throw new Error("Ошибка регистрации")
-      // navigate("/login") или уведомление
+      const res = await register({ email: values.email, password: values.password });
+      localStorage.setItem("token", res.token);
+      navigate("/login")
+      console.log("Регистрация успешна, роль:", res.role);
     } catch (err) {
-      console.error(err)
+      console.error("Ошибка регистрации", err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-muted">

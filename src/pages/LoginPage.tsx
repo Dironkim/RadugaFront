@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { login } from "@/api/auth" // импорт login метода
 
 const loginSchema = z.object({
   email: z.string().email("Неверный email"),
@@ -18,6 +19,7 @@ type LoginFormData = z.infer<typeof loginSchema>
 export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -31,23 +33,12 @@ export default function LoginPage() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      })
-
-      if (!res.ok) {
-        const err = await res.json()
-        setError(err.message || "Ошибка входа")
-        return
-      }
-
-      const { token } = await res.json()
-      localStorage.setItem("token", token)
-      // redirect...
-    } catch (err) {
-      setError("Сервер недоступен")
+      const res = await login(values)
+      localStorage.setItem("token", res.token)
+      navigate("/") // перенаправление после входа
+    } catch (err: any) {
+      const msg = err?.response?.data?.message ?? "Ошибка входа"
+      setError(msg)
     } finally {
       setLoading(false)
     }
