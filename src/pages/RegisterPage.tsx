@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const formSchema = z.object({
+  fullName: z.string().min(1, "Укажите имя"),
+  phone: z.string().min(10, "Укажите номер телефона"),
   email: z.string().email("Неверный email"),
   password: z.string().min(6, "Минимум 6 символов"),
   confirmPassword: z.string(),
@@ -19,6 +21,7 @@ const formSchema = z.object({
   message: "Пароли не совпадают",
   path: ["confirmPassword"],
 })
+
 
 
 
@@ -31,19 +34,22 @@ export default function RegisterPage() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      fullName: "",
+      phone: "",
       email: "",
       password: "",
       confirmPassword: "",
-    },
+    }
+    
   })
 
   async function onSubmit(values: FormData) {
     setLoading(true);
     try {
-      const res = await register({ email: values.email, password: values.password });
+      const res = await register({ email: values.email, password: values.password, fullName: values.fullName, phone:values.phone });
       localStorage.setItem("token", res.token);
       navigate("/login")
-      console.log("Регистрация успешна, роль:", res.role);
+      console.log("Регистрация успешна, роль:", res.user.role);
     } catch (err) {
       console.error("Ошибка регистрации", err);
     } finally {
@@ -63,12 +69,38 @@ export default function RegisterPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Имя</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Имя" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input type="email" placeholder="example@mail.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Телефон</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+79991234567" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

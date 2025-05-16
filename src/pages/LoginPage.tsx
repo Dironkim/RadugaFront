@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import {jwtDecode} from "jwt-decode"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,7 +9,6 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { login } from "@/api/auth" // импорт login метода
 import { useAuth } from "@/context/AuthContext"
-import { type JwtPayload } from "@/types/auth"
 
 const loginSchema = z.object({
   email: z.string().email("Неверный email"),
@@ -39,11 +37,17 @@ export default function LoginPage() {
     
     try {
       const res = await login(values)
+      console.log(res.user)
 
-      const decoded = jwtDecode<JwtPayload>(res.token)
-      const role = decoded.role
 
-      auth.setAuthData(res.token, role)
+      auth.setAuthData({
+        token: res.token,
+        role: res.user.role,
+        userId: res.user.id,
+        email: res.user.email,
+        phone: res.user.phone,
+        fullName: res.user.fullName,
+      })
 
       navigate("/") // перенаправление после входа
     } catch (err: any) {

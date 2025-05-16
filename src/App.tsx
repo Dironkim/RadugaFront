@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './my-components/Layout';
 
-import Catalog from './pages/Catalog';
+import Catalog from './pages/CatalogPage';
 import CategoryPage from './pages/CategoryPage';
 import ProductPage from './pages/ProductPage';
-import CartPage from './pages/Cart';
+import CartPage from './pages/CartPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ProfilePage from './pages/ProfilePage';
 
 import { CartProvider } from './context/CartContext';
 import type { JSX } from 'react';
@@ -28,6 +29,7 @@ function App(): JSX.Element {
               <Route path="register" element={<RegisterPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="profile" element={<ProfilePage/>}/>
             </Route>
           </Routes>
         </Router>
