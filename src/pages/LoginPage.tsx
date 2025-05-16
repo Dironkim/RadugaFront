@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import {jwtDecode} from "jwt-decode"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,6 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { login } from "@/api/auth" // импорт login метода
+import { useAuth } from "@/context/AuthContext"
+import { type JwtPayload } from "@/types/auth"
 
 const loginSchema = z.object({
   email: z.string().email("Неверный email"),
@@ -20,6 +23,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
+  const auth = useAuth()
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -32,9 +36,15 @@ export default function LoginPage() {
   async function onSubmit(values: LoginFormData) {
     setLoading(true)
     setError(null)
+    
     try {
       const res = await login(values)
-      localStorage.setItem("token", res.token)
+
+      const decoded = jwtDecode<JwtPayload>(res.token)
+      const role = decoded.role
+
+      auth.setAuthData(res.token, role)
+
       navigate("/") // перенаправление после входа
     } catch (err: any) {
       const msg = err?.response?.data?.message ?? "Ошибка входа"

@@ -1,4 +1,5 @@
 // components/Navbar.tsx
+import { useAuth } from "@/context/AuthContext";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,11 +8,10 @@ import {
   NavigationMenuList,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
-//import { useAuth } from "@/hooks/useAuth";
+
 
 export function Navbar() {
-  //const { isAuthenticated } = useAuth();
-  const isAuthenticated = false;
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
 
   const hideAuthButton = ["/login", "/register", "/forgot-password"].includes(location.pathname);
