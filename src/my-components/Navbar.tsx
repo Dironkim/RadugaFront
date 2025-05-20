@@ -17,7 +17,7 @@ export function Navbar() {
   const hideAuthButton = ["/login", "/register", "/forgot-password"].includes(location.pathname);
 
   return (
-    <header className="bg-white dark:bg-zinc-900 border-b border-border px-6 py-4 flex items-center justify-between">
+    <header className="bg-white dark:bg-zinc-900 border-b border-border px-2 py-4 flex items-center justify-between !w-full">
       <Link to="/" className="text-xl font-bold text-primary">
         Raduga Store
       </Link>
@@ -26,14 +26,14 @@ export function Navbar() {
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
-              <Link to="/" className="text-sm px-4 py-2 hover:underline">
+              <Link to="/" className="text-sm px-2 py-2 hover:underline">
                 Главная
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
-              <Link to="/curtains" className="text-sm px-4 py-2 hover:underline">
+              <Link to="/curtains" className="text-sm px-2 py-2 hover:underline">
                 Каталог
               </Link>
             </NavigationMenuLink>

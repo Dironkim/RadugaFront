@@ -9,7 +9,6 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ProfilePage from './pages/ProfilePage';
-
 import { CartProvider } from './context/CartContext';
 import type { JSX } from 'react';
 import "./App.css";

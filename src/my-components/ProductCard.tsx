@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { ShoppingCart } from "lucide-react"
 import { ImageCarousel } from "@/my-components/ImageCarousel";
 import { type Product } from "@/types/models";
-import { CartProvider, useCart } from '@/context/CartContext';
+import { useCart } from '@/context/CartContext';
 
 type Props = {
   product: Product
@@ -22,7 +22,7 @@ export function ProductCard({ product }: Props) {
     })
   }
   const navigate = useNavigate()
-  const handleCardClick = () => navigate(`/products/${product.id}`)
+  const handleCardClick = () => navigate(`/product/${product.id}`)
   return (
       <Card onClick={handleCardClick} className="overflow-hidden cursor-pointer transition-all hover:shadow-md">
         <div className="relative w-full h-[200px] overflow-hidden rounded-t-xl">

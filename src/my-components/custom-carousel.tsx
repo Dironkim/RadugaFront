@@ -19,7 +19,7 @@ import {
     if (!images || images.length === 0) return <p>No images available</p>;
   
     return (
-      <Carousel className="w-full max-w-xl mx-auto">
+      <Carousel className="w-full">
         <CarouselContent>
           {images.map((image, index) => (
             <CarouselItem key={index} className="flex flex-col items-center">

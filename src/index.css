@@ -104,6 +104,18 @@ button:focus-visible {
   }
 }
 
+@media (min-width: 680px) {
+  .dp1-min-w {
+    min-width: 600px;
+  }
+}
+
+@media (min-width: 980px) {
+  .dp2-min-w {
+    min-width: 800px;
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

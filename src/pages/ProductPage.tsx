@@ -56,7 +56,7 @@ export default function ProductPage() {
 
   if (loading) {
     return (
-      <div className="p-6 max-w-2xl mx-auto">
+      <div className="p-2 max-w-7xl mx-auto">
         <Skeleton className="h-[400px] mb-6" />
         <Skeleton className="h-6 w-2/3 mb-2" />
         <Skeleton className="h-4 w-full mb-2" />
@@ -80,15 +80,22 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+    <div className="p-2 mx-0 dp1-min-w dp2-min-w">
       <div className="mb-6">
         <CustomCarousel images={transformImages(product.imagePaths)} />
       </div>
-      <div className="space-y-4">
-        <p className="text-muted-foreground">{product.longDescription}</p>
-        <p className="text-lg font-semibold">Цена: ${product.price}</p>
-        <Button onClick={handleAddToCart}>Добавить в корзину</Button>
+
+      <div className="flex flex-wrap items-center justify-between mb-4 gap-4">
+        <h1 className="text-3xl font-bold">{product.name}</h1>
+        <span className="text-xl font-semibold text-primary">${product.price}</span>
+      </div>
+
+      <Button onClick={handleAddToCart} className="mb-6">
+        Добавить в корзину
+      </Button>
+
+      <div className="text-base leading-relaxed whitespace-pre-line text-muted-foreground">
+        {product.longDescription}
       </div>
     </div>
   );
