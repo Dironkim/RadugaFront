@@ -6,9 +6,9 @@ export default function Layout() {
   const { pathname } = useLocation()
   const hideCart = ["/login", "/register"].includes(pathname)
   return (
-    <div className="mx-0">
+    <div className="mx-0 min-h-[1000px]">
       <Navbar />
-      <main className="p-2 !w-full">
+      <main className="p-2 !w-full min-h-[1000px]">
         <Outlet />
         {!hideCart && <CartFloatingButton />}
       </main>

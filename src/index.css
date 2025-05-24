@@ -4,60 +4,80 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Базовая палитра */
+  --color-1:  #ffffff; 
+  --color-2: #f2be5c; 
+  --color-3:  #f25922; 
+  --color-4: #f2a477;
+  --color-5: #f25050; 
+  --color-6: #592e46;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --main-background-transparent: #f2be5c4D;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  /* Основные цвета интерфейса */
+  --background: var(--color-1);
+  --foreground: var(--color-2);
+
+  --input: var(--color-1);
+  --input-foreground: var(--foreground);
+
+  --card: var(--color-1);
+  --card-foreground: var(--color-2);
+
+  --popover: var(--color-1);
+  --popover-foreground: var(--color-2);
+
+  --primary: var(--color-3);
+  --primary-foreground: var(--color-1);
+
+  --secondary: var(--color-4);
+  --secondary-foreground: var(--color-1);
+
+  --muted: var(--color-5);
+  --muted-foreground: var(--color-2);
+
+  --accent: var(--color-4);
+  --accent-foreground: var(--color-1);
+
+  --destructive: var(--color-6);
+
+  --border: var(--color-5);
+  --ring: var(--color-4);
+
+  /* Графики */
+  --chart-1: var(--color-3);
+  --chart-2: var(--color-4);
+  --chart-3: var(--color-5);
+  --chart-4: var(--color-6);
+  --chart-5: var(--color-2);
+
+  /* Сайдбар */
+  --sidebar: var(--color-1);
+  --sidebar-foreground: var(--color-2);
+  --sidebar-primary: var(--color-3);
+  --sidebar-primary-foreground: var(--color-1);
+  --sidebar-accent: var(--color-4);
+  --sidebar-accent-foreground: var(--color-1);
+  --sidebar-border: var(--color-5);
+  --sidebar-ring: var(--color-4);
+}
+
+main {
+  background-color: var(--main-background-transparent);
+}
+
+input {
+  background-color: var(--input);
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  /* color: #646cff; */
   text-decoration: inherit;
 }
-a:hover {
+/* a:hover {
   color: #535bf2;
-}
+} */
 
 body {
   margin: 0;
@@ -79,19 +99,19 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+/* button:hover {
   border-color: #646cff;
-}
+} */
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -102,7 +122,7 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 
 @media (min-width: 680px) {
   .dp1-min-w {
@@ -154,7 +174,7 @@ button:focus-visible {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-.dark {
+/* .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
@@ -186,7 +206,7 @@ button:focus-visible {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
-}
+} */
 
 @layer base {
   * {
