@@ -6,6 +6,7 @@ export const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState<AuthContextType["user"]>({
       id: null,
       email: '',
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           role,
         })
       }
+      setIsLoading(false);
     }, [])
   
     const setAuthData: AuthContextType["setAuthData"] = (data) => {
@@ -65,7 +67,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   
     return (
-      <AuthContext.Provider value={{ isAuthenticated, user, setAuthData, logout }}>
+      <AuthContext.Provider value={{ isAuthenticated, isLoading, user, setAuthData, logout }}>
         {children}
       </AuthContext.Provider>
     )

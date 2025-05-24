@@ -14,7 +14,7 @@ import type { JSX } from 'react';
 import "./App.css";
 import { AuthProvider } from './context/AuthContext';
 import AdminPanel from './pages/AdminPanel';
-
+import { RequireRole } from "@/my-components/AdminPanel/RequireRole"
 function App(): JSX.Element {
   return (
     <AuthProvider>
@@ -30,7 +30,14 @@ function App(): JSX.Element {
               <Route path="login" element={<LoginPage />} />
               <Route path="forgot-password" element={<ForgotPasswordPage />} />
               <Route path="profile" element={<ProfilePage/>}/>
-              <Route path="admin" element={<AdminPanel/>}/>
+              <Route
+                path="/admin"
+                element={
+                  <RequireRole allowedRoles={["AdminDesigner"]}>
+                    <AdminPanel />
+                  </RequireRole>
+                }
+              />
             </Route>
           </Routes>
         </Router>

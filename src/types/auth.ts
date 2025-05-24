@@ -23,6 +23,7 @@ export interface AuthResponse {
 
   export interface AuthContextType {
     isAuthenticated: boolean
+    isLoading: boolean
     user: {
       id: string | null
       email: string
