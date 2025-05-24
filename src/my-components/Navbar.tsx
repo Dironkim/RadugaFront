@@ -11,10 +11,11 @@ import {
 
 
 export function Navbar() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth(); // добавлено user
   const location = useLocation();
 
   const hideAuthButton = ["/login", "/register", "/forgot-password"].includes(location.pathname);
+  const isAdminDesigner = isAuthenticated && user?.role === "AdminDesigner"; // проверка роли
 
   return (
     <header className="bg-[var(--secondary)] dark:bg-zinc-900 border-b border-border px-2 py-4 flex items-center justify-between !w-full">
@@ -22,7 +23,7 @@ export function Navbar() {
         Raduga Store
       </Link>
 
-      <NavigationMenu className="bg-[var(--secondary)] text-[var(--primary-foreground)]" >
+      <NavigationMenu className="bg-[var(--secondary)] text-[var(--primary-foreground)]">
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink asChild className="bg-[var(--secondary)] hover:bg-[var(--primary)]">
@@ -31,7 +32,7 @@ export function Navbar() {
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
-          <NavigationMenuItem >
+          <NavigationMenuItem>
             <NavigationMenuLink asChild className="bg-[var(--secondary)] hover:bg-[var(--primary)]">
               <Link to="/curtains" className="text-sm px-2 py-2">
                 Каталог
@@ -45,6 +46,15 @@ export function Navbar() {
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
+          {isAdminDesigner && (
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild className="bg-[var(--secondary)] hover:bg-[var(--primary)]">
+                <Link to="/admin" className="text-sm px-4 py-2">
+                  Панель управления
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          )}
         </NavigationMenuList>
       </NavigationMenu>
 
@@ -64,3 +74,4 @@ export function Navbar() {
     </header>
   );
 }
+

@@ -4,7 +4,7 @@ import { Navbar } from "@/my-components/Navbar";
 import CartFloatingButton from '@/my-components/CartFloatingButton'
 export default function Layout() {
   const { pathname } = useLocation()
-  const hideCart = ["/login", "/register"].includes(pathname)
+  const hideCart = ["/login", "/register","/admin"].includes(pathname)
   return (
     <div className="mx-0 min-h-[1000px]">
       <Navbar />
