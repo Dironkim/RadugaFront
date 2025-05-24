@@ -11,3 +11,12 @@ export const login = async (payload: AuthRequest): Promise<AuthResponse> => {
   const res = await api.post("/auth/login", payload);
   return res.data;
 };
+
+export const getAuthHeader = () => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+};

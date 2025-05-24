@@ -13,6 +13,7 @@ import { CartProvider } from './context/CartContext';
 import type { JSX } from 'react';
 import "./App.css";
 import { AuthProvider } from './context/AuthContext';
+import AdminPanel from './pages/AdminPanel';
 
 function App(): JSX.Element {
   return (
@@ -29,6 +30,7 @@ function App(): JSX.Element {
               <Route path="login" element={<LoginPage />} />
               <Route path="forgot-password" element={<ForgotPasswordPage />} />
               <Route path="profile" element={<ProfilePage/>}/>
+              <Route path="admin" element={<AdminPanel/>}/>
             </Route>
           </Routes>
         </Router>
