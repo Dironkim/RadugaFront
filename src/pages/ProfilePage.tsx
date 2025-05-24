@@ -15,18 +15,6 @@ export default function ProfilePage() {
     navigate("/change-password")
   }
 
-  const handleDeleteAccount = async () => {
-    if (confirm("Вы уверены, что хотите удалить аккаунт? Это действие необратимо.")) {
-      // TODO: отправить запрос на удаление аккаунта
-      await fetch(`/api/users/${user.id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      logout()
-      navigate("/login")
-    }
-  }
-
   return (
     <div className="max-w-xl mx-auto p-6">
       <Card>
@@ -52,9 +40,6 @@ export default function ProfilePage() {
             </Button>
             <Button onClick={() => { logout(); navigate("/login") }} variant="secondary">
               Выйти из аккаунта
-            </Button>
-            <Button onClick={handleDeleteAccount} variant="destructive">
-              Удалить аккаунт
             </Button>
           </div>
         </CardContent>
