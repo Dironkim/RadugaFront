@@ -66,7 +66,7 @@ export default function CartPage() {
                   <span className="font-medium">{item.name}</span>
                 </div>
               </TableCell>
-              <TableCell>${item.price.toFixed(2)}</TableCell>
+              <TableCell>{item.price.toFixed(2)} ₽</TableCell>
               <TableCell>
                 <Input
                   type="number"
@@ -79,7 +79,7 @@ export default function CartPage() {
                 />
               </TableCell>
               <TableCell>
-                ${(item.price * item.quantity).toFixed(2)}
+                {(item.price * item.quantity).toFixed(2)} ₽
               </TableCell>
               <TableCell>
                 <Button
@@ -96,7 +96,7 @@ export default function CartPage() {
 
       <div className="mt-6 flex justify-between items-center">
         <h2 className="text-xl font-bold">
-          Итого: ${totalPrice.toFixed(2)}
+          Итого: {totalPrice.toFixed(2)} ₽
         </h2>
         <Link to="/checkout">
           <Button size="lg" className="text-lg">
