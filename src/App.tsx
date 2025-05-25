@@ -16,6 +16,7 @@ import { AuthProvider } from './context/AuthContext';
 import AdminPanel from './pages/AdminPanel';
 import { RequireRole } from "@/my-components/AdminPanel/RequireRole"
 import EmailConfirmationPage from './pages/auth/ConfirmEmailPage';
+import AdminOrdersPage from './pages/AdminOrdersPage'
 
 
 function App(): JSX.Element {
@@ -43,6 +44,14 @@ function App(): JSX.Element {
                   </RequireRole>
                 }
               />
+              <Route
+                path="/admin/orders"
+                element={
+                  <RequireRole allowedRoles={["AdminDesigner"]}>
+                    <AdminOrdersPage/>
+                  </RequireRole>
+                }
+              />  
             </Route>
           </Routes>
         </Router>

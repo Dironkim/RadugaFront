@@ -67,4 +67,12 @@ export interface Salon {
   name: string;
   address: string;
 }
+export interface User {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  createdAt: string;
+  role: string;
+}
 
