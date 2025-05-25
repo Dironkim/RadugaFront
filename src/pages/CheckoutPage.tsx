@@ -3,26 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useState } from "react";
-
-const salons = [
-  {
-    id: 1,
-    name: "Салон на Ленина, 25",
-    address: "г. Киров, ул. Ленина, 25",
-    mapUrl: "https://yandex.ru/maps/?text=Киров, Ленина 25",
-  },
-  {
-    id: 2,
-    name: "Салон на Октябрьском, 12",
-    address: "г. Киров, Октябрьский пр-т, 12",
-    mapUrl: "https://yandex.ru/maps/?text=Киров, Октябрьский 12",
-  },
-];
+import { useEffect, useState } from "react";
+import { createOrder } from "@/api/orderApi";
+import { fetchSalons } from "@/api/salonApi";
+import {type Salon} from "@/types/models";
 
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
   const [selectedSalonId, setSelectedSalonId] = useState<number | null>(null);
+  const [salons, setSalons] = useState<Salon[]>([]);
   const navigate = useNavigate();
 
   const totalPrice = cartItems.reduce(
@@ -30,11 +19,33 @@ export default function CheckoutPage() {
     0
   );
 
-  const handleConfirm = () => {
+  useEffect(() => {
+    fetchSalons().then(setSalons).catch(console.error);
+  }, []);
+
+  const handleConfirm = async () => {
     if (selectedSalonId === null) return;
-    // TODO: отправка на сервер (например, через fetch или axios)
-    clearCart();
-    navigate("/"); // или redirect на страницу "Спасибо за заказ"
+
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
+
+    const orderDto = {
+      status: "pending",
+      userId,
+      salonId: selectedSalonId,
+      orderProducts: cartItems.map(item => ({
+        productId: item.id,
+        quantity: item.quantity,
+      })),
+    };
+
+    try {
+      await createOrder(orderDto);
+      clearCart();
+      navigate("/thank-you");
+    } catch (error) {
+      console.error("Ошибка при оформлении заказа:", error);
+    }
   };
 
   return (
@@ -90,7 +101,12 @@ export default function CheckoutPage() {
                 />
                 <span>{salon.name} — {salon.address}</span>
               </label>
-              <Button variant="outline" onClick={() => window.open(salon.mapUrl, "_blank")}>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  window.open(`https://yandex.ru/maps/?text=${encodeURIComponent(salon.address)}`, "_blank")
+                }
+              >
                 Показать на карте
               </Button>
             </div>
