@@ -9,6 +9,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { register } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner"
 
 
 const formSchema = z.object({
@@ -44,19 +45,26 @@ export default function RegisterPage() {
   })
 
   async function onSubmit(values: FormData) {
-    setLoading(true);
+    setLoading(true)
     try {
-      const res = await register({ email: values.email, password: values.password, fullName: values.fullName, phone:values.phone });
-      localStorage.setItem("token", res.token);
-      navigate("/login")
-      console.log("Регистрация успешна, роль:", res.user.role);
-    } catch (err) {
-      console.error("Ошибка регистрации", err);
+      await register({
+        email: values.email,
+        password: values.password,
+        fullName: values.fullName,
+        phone: values.phone,
+      })
+
+      toast.success("Регистрация прошла успешно. Проверьте email для подтверждения.")
+      navigate("/login", { replace: true })
+    } catch (error) {
+      console.error("Ошибка регистрации", error)
+
+      toast.error("Ошибка регистрации. Проверьте данные или попробуйте позже.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
-  
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-muted">

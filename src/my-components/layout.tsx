@@ -2,6 +2,10 @@
 import { Outlet, useLocation } from "react-router-dom"
 import { Navbar } from "@/my-components/Navbar";
 import CartFloatingButton from '@/my-components/CartFloatingButton'
+import { Toaster } from "@/components/ui/sonner"
+
+
+
 export default function Layout() {
   const { pathname } = useLocation()
   const hideCart = ["/login", "/register","/admin"].includes(pathname)
@@ -10,6 +14,7 @@ export default function Layout() {
       <Navbar />
       <main className="p-2 !w-full min-h-[1000px]">
         <Outlet />
+        <Toaster position="top-center" richColors />
         {!hideCart && <CartFloatingButton />}
       </main>
     </div>
