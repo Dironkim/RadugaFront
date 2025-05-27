@@ -138,16 +138,16 @@ export default function AdminPanel() {
         </CardContent>
       </Card>
 
-      {formVisible && (
-        <ProductForm
-        initialData={editingProduct ?? undefined}
-        categories={categories}
-        colors={colors}
-        tags={tags}
-        onSave={handleFormSave}
-        onCancel={handleFormCancel}
-      />
-      )}
+      {formVisible && categories.length > 0 && (
+  <ProductForm
+    initialData={editingProduct ?? undefined}
+    categories={categories}
+    colors={colors}
+    tags={tags}
+    onSave={handleFormSave}
+    onCancel={handleFormCancel}
+  />
+)}
     </div>
   )
 }

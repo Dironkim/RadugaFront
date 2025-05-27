@@ -87,7 +87,7 @@ export default function ProductPage() {
 
       <div className="flex flex-wrap items-center justify-between mb-4 gap-4">
         <h1 className="text-3xl font-bold">{product.name}</h1>
-        <span className="text-xl font-semibold text-primary">${product.price}</span>
+        <span className="text-xl font-semibold text-primary">{product.price} ₽</span>
       </div>
 
       <Button onClick={handleAddToCart} className="mb-6">

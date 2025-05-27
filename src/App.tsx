@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './my-components/Layout';
 import Catalog from './pages/CatalogPage';
-import CategoryPage from './pages/CategoryPage';
+
 import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import RegisterPage from './pages/auth/RegisterPage';
@@ -17,6 +17,7 @@ import AdminPanel from './pages/AdminPanel';
 import { RequireRole } from "@/my-components/AdminPanel/RequireRole"
 import EmailConfirmationPage from './pages/auth/ConfirmEmailPage';
 import AdminOrdersPage from './pages/AdminOrdersPage'
+import ContactsPage from './pages/ContactsPage';
 
 
 function App(): JSX.Element {
@@ -27,8 +28,8 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Catalog />} />
+              <Route path="/catalog" element={<Catalog />} />
               <Route path="cart" element={<CartPage />} />
-              <Route path="curtains" element={<CategoryPage />} />
               <Route path="product/:productId" element={<ProductPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="confirm-email" element={<EmailConfirmationPage/>}/>
@@ -36,6 +37,7 @@ function App(): JSX.Element {
               <Route path="forgot-password" element={<ForgotPasswordPage />} />
               <Route path="profile" element={<ProfilePage/>}/>
               <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/contacts" element = {<ContactsPage/>}/>
               <Route
                 path="/admin"
                 element={

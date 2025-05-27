@@ -1,10 +1,16 @@
 // ProductForm.tsx
 import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { Select, SelectTrigger,SelectValue, SelectContent, SelectItem } from '@radix-ui/react-select'
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
+  } from "@/components/ui/select"
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@radix-ui/react-checkbox'
+import { Checkbox } from "@/components/ui/checkbox"
 import {type Category, type Color,type Tag,type Image } from '@/types/models'
 import {
   createProduct,
@@ -15,6 +21,7 @@ import {
     deleteImage,
     fetchImages
   } from '@/api/imageApi'
+
 
   const BASE_URL = import.meta.env.VITE_SERVER_URL as string;
 
@@ -126,7 +133,7 @@ import {
         <div>
           <label className="block font-medium">Категория</label>
           <Select value={form.categoryId.toString()} onValueChange={val => setForm(prev => ({ ...prev, categoryId: +val }))}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectTrigger className="bg-white border border-border"><SelectValue placeholder="Выберите категорию" /></SelectTrigger>
             <SelectContent>
               {categories.map(c => <SelectItem key={c.id} value={c.id.toString()}>{c.name}</SelectItem>)}
             </SelectContent>
@@ -140,7 +147,13 @@ import {
   
         <div>
           <label className="block font-medium">Длинное описание</label>
-          <Textarea name="longDescription" value={form.longDescription} onChange={handleChange} />
+          <Textarea
+            name="longDescription"
+            value={form.longDescription}
+            onChange={handleChange}
+            className="bg-white dark:bg-zinc-800 border border-border"
+            />
+
         </div>
   
         <div>
@@ -153,9 +166,12 @@ import {
           <div className="flex flex-wrap gap-2">
             {colors.map(c => (
               <label key={c.id} className="flex items-center gap-2">
-                <Checkbox checked={form.colorIds.includes(c.id)} onCheckedChange={() => handleCheckboxChange(c.id, 'colorIds')} />
-                {c.name}
-              </label>
+              <Checkbox
+                checked={form.colorIds.includes(c.id)}
+                onCheckedChange={() => handleCheckboxChange(c.id, 'colorIds')}
+              />
+              {c.name}
+            </label>
             ))}
           </div>
         </div>

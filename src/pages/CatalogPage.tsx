@@ -70,18 +70,21 @@ export default function CatalogPage() {
             <Button variant="outline">Фильтры</Button>
           </PopoverTrigger>
           <PopoverContent className="w-80 space-y-4">
-            <div>
-              <p className="font-medium mb-2">Категории</p>
-              <RadioGroup value={categoryFilter} onValueChange={setCategoryFilter}>
-                <RadioGroupItem value="all" id="cat_all" /> <label htmlFor="cat_all">Все</label>
-                {categories.map(c => (
-                  <div key={c.id} className="flex items-center space-x-2">
-                    <RadioGroupItem value={String(c.id)} id={`cat_${c.id}`} />
-                    <label htmlFor={`cat_${c.id}`}>{c.name}</label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
+          <div>
+    <p className="font-medium mb-2">Категории</p>
+    <RadioGroup value={categoryFilter} onValueChange={setCategoryFilter}>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="all" id="cat_all" />
+        <label htmlFor="cat_all">Все</label>
+      </div>
+      {categories.map(c => (
+        <div key={c.id} className="flex items-center space-x-2">
+          <RadioGroupItem value={String(c.id)} id={`cat_${c.id}`} />
+          <label htmlFor={`cat_${c.id}`}>{c.name}</label>
+        </div>
+      ))}
+    </RadioGroup>
+  </div>
             <div>
               <p className="font-medium mb-2">Теги</p>
               {tags.map(tag => (

@@ -34,7 +34,7 @@ export function Navbar() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink asChild className="bg-[var(--secondary)] hover:bg-[var(--primary)]">
-              <Link to="/curtains" className="text-sm px-2 py-2">
+              <Link to="/catalog" className="text-sm px-2 py-2">
                 Каталог
               </Link>
             </NavigationMenuLink>
@@ -47,13 +47,22 @@ export function Navbar() {
             </NavigationMenuLink>
           </NavigationMenuItem>
           {isAdminDesigner && (
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild className="bg-[var(--secondary)] hover:bg-[var(--primary)]">
-                <Link to="/admin" className="text-sm px-4 py-2">
-                  Панель управления
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className="bg-[var(--secondary)] hover:bg-[var(--primary)]">
+                  <Link to="/admin" className="text-sm px-4 py-2">
+                    Панель управления
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className="bg-[var(--secondary)] hover:bg-[var(--primary)]">
+                  <Link to="/admin/orders" className="text-sm px-4 py-2">
+                    Заказы
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </>
           )}
         </NavigationMenuList>
       </NavigationMenu>
