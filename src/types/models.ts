@@ -53,6 +53,8 @@ export interface Order {
     quantity: number;
     currentPrice: number;
     subtotal: number;
+    width?: number;
+    height?: number;
   }[];
 }
 export interface CreateOrderDto {
@@ -62,6 +64,8 @@ export interface CreateOrderDto {
   orderProducts: {
     productId: number;
     quantity: number;
+    width?: number;
+    height?: number;
   }[];
 }
 export interface Salon {

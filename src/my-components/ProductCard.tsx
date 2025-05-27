@@ -19,6 +19,7 @@ export function ProductCard({ product }: Props) {
       name: product.name,
       price: product.price,
       imagePaths: product.imagePaths,
+      requiresSize: product.requiresSize
     })
   }
   const navigate = useNavigate()

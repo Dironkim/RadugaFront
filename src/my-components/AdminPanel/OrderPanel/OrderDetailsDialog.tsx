@@ -25,12 +25,20 @@ import {
               <p><strong>Статус:</strong> {order.status}</p>
               <p><strong>Товары:</strong></p>
               <ul className="pl-4 list-disc">
-                {order.orderProducts.map((item) => (
-                  <li key={item.productId}>
+              {order.orderProducts.map((item) => (
+                <li key={item.productId}>
                     {item.productName} — {item.quantity} шт. по {item.currentPrice} ₽
-                  </li>
+                    {item.width && item.height && " за 1м²"}
+                    {item.width && item.height && (
+                    <span className="block text-muted-foreground text-sm">
+                        Размер: {item.width} м × {item.height} м
+                    </span>
+                    )}
+                </li>
                 ))}
-              </ul>
+
+                </ul>
+
               <p><strong>Сумма:</strong> {order.orderProducts.reduce((sum, p) => sum + p.subtotal, 0)} ₽</p>
             </div>
           )}

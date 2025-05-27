@@ -14,10 +14,17 @@ export default function CheckoutPage() {
   const [salons, setSalons] = useState<Salon[]>([]);
   const navigate = useNavigate();
 
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const getItemSubtotal = (item: typeof cartItems[number]) => {
+    if (item.requiresSize && item.width && item.height) {
+      const area = item.width * item.height;
+      const tailoring = item.tailoringFee ?? 0;
+      return (area * item.price + tailoring) * item.quantity;
+    }
+    return item.price * item.quantity;
+  };
+  
+  const totalPrice = cartItems.reduce((total, item) => total + getItemSubtotal(item), 0);
+  
 
   useEffect(() => {
     fetchSalons().then(setSalons).catch(console.error);
@@ -36,7 +43,10 @@ export default function CheckoutPage() {
       orderProducts: cartItems.map(item => ({
         productId: item.id,
         quantity: item.quantity,
+        width: item.requiresSize ? item.width : undefined,
+        height: item.requiresSize ? item.height : undefined,
       })),
+      
     };
 
     try {
@@ -69,11 +79,31 @@ export default function CheckoutPage() {
             <TableBody>
               {cartItems.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.price.toFixed(2)} ₽</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{(item.price * item.quantity).toFixed(2)} ₽</TableCell>
-                </TableRow>
+                <TableCell>
+                  {item.name}
+                  {item.requiresSize && item.width && item.height && (
+                    <div className="text-sm text-muted-foreground mt-1">
+                      {item.width} м × {item.height} м
+                    </div>
+                  )}
+                </TableCell>
+                <TableCell>
+  {item.price.toFixed(2)} ₽
+  {item.requiresSize && (
+    <span className="block text-sm text-muted-foreground">за 1м²</span>
+  )}
+  {item.tailoringFee && (
+    <span className="block text-sm text-muted-foreground">
+      + {item.tailoringFee} ₽ пошив
+    </span>
+  )}
+</TableCell>
+
+                <TableCell>{item.quantity}</TableCell>
+                <TableCell>{getItemSubtotal(item).toFixed(2)} ₽</TableCell>
+
+              </TableRow>
+              
               ))}
               <TableRow>
                 <TableCell colSpan={3} className="font-bold text-right">Итого:</TableCell>

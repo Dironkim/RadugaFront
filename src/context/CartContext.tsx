@@ -14,13 +14,19 @@ import {
     price: number;
     quantity: number;
     imagePaths: string[];
+    requiresSize?: boolean;
+    width?: number;
+    height?: number;
+    tailoringFee?: number;
   }
+  
   
   interface CartContextType {
     cartItems: CartItem[];
     addToCart: (item: Omit<CartItem, "quantity">) => void;
     removeFromCart: (productId: number) => void;
     updateQuantity: (productId: number, quantity: number) => void;
+    updateDimensions: (productId: number, width: number, height: number) => void;
     clearCart: () => void;
   }
   
@@ -33,7 +39,6 @@ import {
   export const CartProvider = ({ children }: { children: ReactNode }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
   
-    // Загрузка из localStorage
     useEffect(() => {
       const stored = localStorage.getItem("cart");
       if (stored) {
@@ -46,16 +51,15 @@ import {
       }
     }, []);
   
-    // Сохранение в localStorage
     useEffect(() => {
       localStorage.setItem("cart", JSON.stringify(cartItems));
     }, [cartItems]);
   
     const addToCart = (product: Omit<CartItem, "quantity">) => {
-      setCartItems((prev) => {
-        const existing = prev.find((item) => item.id === product.id);
+      setCartItems(prev => {
+        const existing = prev.find(item => item.id === product.id);
         if (existing) {
-          return prev.map((item) =>
+          return prev.map(item =>
             item.id === product.id
               ? { ...item, quantity: item.quantity + 1 }
               : item
@@ -67,13 +71,21 @@ import {
     };
   
     const removeFromCart = (productId: number) => {
-      setCartItems((prev) => prev.filter((item) => item.id !== productId));
+      setCartItems(prev => prev.filter(item => item.id !== productId));
     };
   
     const updateQuantity = (productId: number, quantity: number) => {
-      setCartItems((prev) =>
-        prev.map((item) =>
+      setCartItems(prev =>
+        prev.map(item =>
           item.id === productId ? { ...item, quantity } : item
+        )
+      );
+    };
+  
+    const updateDimensions = (productId: number, width: number, height: number) => {
+      setCartItems(prev =>
+        prev.map(item =>
+          item.id === productId ? { ...item, width, height } : item
         )
       );
     };
@@ -89,6 +101,7 @@ import {
           addToCart,
           removeFromCart,
           updateQuantity,
+          updateDimensions,
           clearCart,
         }}
       >
@@ -96,6 +109,7 @@ import {
       </CartContext.Provider>
     );
   };
+  
   
   // ===== Хук =====
   

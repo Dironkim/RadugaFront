@@ -1,4 +1,4 @@
-import { useCart } from "@/context/CartContext";
+import { useCart, type CartItem } from "@/context/CartContext";
 import { Link } from "react-router-dom";
 import { ImageCarousel } from "@/my-components/ImageCarousel";
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,10 @@ import {
 } from "@/components/ui/table";
 
 export default function CartPage() {
-  const { cartItems, removeFromCart, updateQuantity } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, updateDimensions } = useCart();
 
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+
+  
 
   const handleQuantityChange = (value: string, productId: number) => {
     const quantity = parseInt(value, 10);
@@ -26,6 +24,34 @@ export default function CartPage() {
       updateQuantity(productId, quantity);
     }
   };
+  const getItemSubtotal = (item: CartItem) => {
+    if (item.requiresSize && item.width && item.height) {
+      const area = item.width * item.height;
+      const base = area * item.price;
+      const tailoring = item.tailoringFee ?? 0;
+      return (base + tailoring) * item.quantity;
+    }
+    return item.price * item.quantity;
+  };
+  
+  const totalPrice = cartItems.reduce((total, item) => total + getItemSubtotal(item), 0);
+  
+  const handleDimensionChange = (
+    productId: number,
+    field: "width" | "height",
+    value: string
+  ) => {
+    const num = parseFloat(value);
+    if (!isNaN(num) && num > 0) {
+      const item = cartItems.find(i => i.id === productId);
+      if (item) {
+        const width = field === "width" ? num : item.width ?? 1;
+        const height = field === "height" ? num : item.height ?? 1;
+        updateDimensions(productId, width, height);
+      }
+    }
+  };
+  
 
   if (cartItems.length === 0) {
     return (
@@ -58,38 +84,76 @@ export default function CartPage() {
         <TableBody>
           {cartItems.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>
-                <div className="flex items-center gap-4">
-                  <div className="w-24">
-                    <ImageCarousel images={item.imagePaths} />
-                  </div>
-                  <span className="font-medium">{item.name}</span>
+            <TableCell>
+              <div className="flex items-center gap-4">
+                <div className="w-24">
+                  <ImageCarousel images={item.imagePaths} />
                 </div>
-              </TableCell>
-              <TableCell>{item.price.toFixed(2)} ₽</TableCell>
-              <TableCell>
-                <Input
-                  type="number"
-                  min={1}
-                  value={item.quantity}
-                  onChange={(e) =>
-                    handleQuantityChange(e.target.value, item.id)
-                  }
-                  className="w-20"
-                />
-              </TableCell>
-              <TableCell>
-                {(item.price * item.quantity).toFixed(2)} ₽
-              </TableCell>
-              <TableCell>
-                <Button
-                  variant="destructive"
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  Удалить
-                </Button>
-              </TableCell>
-            </TableRow>
+                <span className="font-medium">{item.name}</span>
+              </div>
+            </TableCell>
+          
+            <TableCell>{item.price.toFixed(2)} ₽</TableCell>
+          
+            <TableCell>
+              <Input
+                type="number"
+                min={1}
+                value={item.quantity}
+                onChange={(e) => handleQuantityChange(e.target.value, item.id)}
+                className="w-20 mb-2"
+              />
+          
+              {item.requiresSize && (
+                <div className="flex flex-col gap-1">
+                  <label className="text-sm text-muted-foreground">Ширина (м):</label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={item.width ?? ""}
+                    onChange={(e) =>
+                      handleDimensionChange(item.id, "width", e.target.value)
+                    }
+                    className="w-24"
+                  />
+                  <label className="text-sm text-muted-foreground">Высота (м):</label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={item.height ?? ""}
+                    onChange={(e) =>
+                      handleDimensionChange(item.id, "height", e.target.value)
+                    }
+                    className="w-24"
+                  />
+                </div>
+              )}
+            </TableCell>
+          
+            <TableCell>
+              {item.price.toFixed(2)} ₽
+              {item.requiresSize && (
+                <span className="block text-sm text-muted-foreground">
+                  за 1м²
+                </span>
+              )}
+              {item.tailoringFee && (
+                <span className="block text-sm text-muted-foreground">
+                  + {item.tailoringFee} ₽ пошив
+                </span>
+              )}
+            </TableCell>
+
+          
+            <TableCell>
+              <Button variant="destructive" onClick={() => removeFromCart(item.id)}>
+                Удалить
+              </Button>
+            </TableCell>
+          </TableRow>
+          
           ))}
         </TableBody>
       </Table>
