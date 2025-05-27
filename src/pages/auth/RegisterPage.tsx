@@ -12,16 +12,28 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner"
 
 
-const formSchema = z.object({
-  fullName: z.string().min(1, "Укажите имя"),
-  phone: z.string().min(10, "Укажите номер телефона"),
-  email: z.string().email("Неверный email"),
-  password: z.string().min(6, "Минимум 6 символов"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Пароли не совпадают",
-  path: ["confirmPassword"],
-})
+const passwordRequirements =
+  "Минимум 6 символов, 1 заглавная латинская буква, 1 строчная латинская буква, 1 цифра, 1 спецсимвол";
+
+const formSchema = z
+  .object({
+    fullName: z.string().min(1, "Укажите имя"),
+    phone: z.string().min(10, "Укажите номер телефона"),
+    email: z.string().email("Неверный email"),
+    password: z
+      .string()
+      .min(6, "Минимум 6 символов")
+      .regex(/[a-z]/, "Нужна строчная латинская буква")
+      .regex(/[A-Z]/, "Нужна заглавная латинская буква")
+      .regex(/[0-9]/, "Нужна цифра")
+      .regex(/[^a-zA-Z0-9]/, "Нужен спецсимвол")
+      ,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Пароли не совпадают",
+    path: ["confirmPassword"],
+  });
 
 
 
@@ -119,7 +131,13 @@ export default function RegisterPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Пароль</FormLabel>
+                    <FormLabel>
+                      Пароль
+                      <span className="block text-xs text-muted-foreground">
+                        {passwordRequirements}
+                      </span>
+                    </FormLabel>
+
                     <FormControl>
                       <Input type="password" {...field} />
                     </FormControl>

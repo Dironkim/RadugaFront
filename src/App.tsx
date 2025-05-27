@@ -18,7 +18,8 @@ import { RequireRole } from "@/my-components/AdminPanel/RequireRole"
 import EmailConfirmationPage from './pages/auth/ConfirmEmailPage';
 import AdminOrdersPage from './pages/AdminOrdersPage'
 import ContactsPage from './pages/ContactsPage';
-
+import ThankYouPage from './pages/ThankYouPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App(): JSX.Element {
   return (
@@ -38,6 +39,7 @@ function App(): JSX.Element {
               <Route path="profile" element={<ProfilePage/>}/>
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/contacts" element = {<ContactsPage/>}/>
+              <Route path="/thank-you" element = {<ThankYouPage/>}/>
               <Route
                 path="/admin"
                 element={
@@ -53,7 +55,9 @@ function App(): JSX.Element {
                     <AdminOrdersPage/>
                   </RequireRole>
                 }
-              />  
+              /> 
+              <Route path="*" element={<NotFoundPage />} />
+ 
             </Route>
           </Routes>
         </Router>
