@@ -87,7 +87,24 @@ export default function ProductPage() {
 
       <div className="flex flex-wrap items-center justify-between mb-4 gap-4">
         <h1 className="text-3xl font-bold">{product.name}</h1>
-        <span className="text-xl font-semibold text-primary">{product.price} ₽</span>
+        <div className="flex flex-col items-end gap-1">
+  <span className="text-xl font-semibold text-primary">
+    {product.price} ₽ {product.requiresSize ? "/ м²" : ""}
+  </span>
+  {product.requiresSize && (
+    <>
+      <div className="text-sm text-yellow-700 bg-yellow-100 px-3 py-1 rounded">
+        Индивидуальный пошив
+      </div>
+      {product.tailoringFee !== null && product.tailoringFee !== undefined && (
+        <div className="text-sm text-muted-foreground">
+          + {product.tailoringFee} ₽ за пошив
+        </div>
+      )}
+    </>
+  )}
+</div>
+
       </div>
 
       <Button onClick={handleAddToCart} className="mb-6">

@@ -6,6 +6,8 @@ export interface Product {
   categoryId: number;
   shortDescription?: string;
   longDescription?: string;
+  requiresSize: boolean;
+  tailoringFee?: number;
   price: number;
   tagIds: number[];
   colorIds: number[];

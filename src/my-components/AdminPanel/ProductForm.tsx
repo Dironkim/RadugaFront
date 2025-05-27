@@ -30,6 +30,8 @@ import {
     name: string
     categoryId: number
     price: number
+    requiresSize: boolean
+    tailoringFee?: number
     shortDescription: string
     longDescription: string
     tagIds: number[]
@@ -53,6 +55,8 @@ import {
       name: initialData?.name ?? '',
       categoryId: initialData?.categoryId ?? categories[0]?.id ?? 0,
       price: initialData?.price ?? 0,
+      requiresSize: initialData?.requiresSize ?? false,
+      tailoringFee: initialData?.tailoringFee ?? 0,
       shortDescription: initialData?.shortDescription ?? '',
       longDescription: initialData?.longDescription ?? '',
       tagIds: initialData?.tagIds ?? [],
@@ -157,9 +161,36 @@ import {
         </div>
   
         <div>
-          <label className="block font-medium">Цена</label>
-          <Input type="number" name="price" value={form.price} onChange={handleChange} />
+        <label className="block font-medium">
+            Цена {form.requiresSize && <span className="text-sm text-muted-foreground">(за 1 м²)</span>}
+        </label>
+        <Input type="number" name="price" value={form.price} onChange={handleChange} />
         </div>
+
+
+        <div className="space-y-2">
+        <label className="block font-medium">Пошив</label>
+        <div className="flex items-center gap-2">
+            <Checkbox
+            checked={form.requiresSize}
+            onCheckedChange={checked => setForm(prev => ({ ...prev, requiresSize: !!checked }))}
+            />
+            <span>Товар с индивидуальным пошивом</span>
+        </div>
+
+        {form.requiresSize && (
+            <div>
+            <label className="block font-medium">Базовая стоимость пошива</label>
+            <Input
+                type="number"
+                name="tailoringFee"
+                value={form.tailoringFee ?? 0}
+                onChange={e => setForm(prev => ({ ...prev, tailoringFee: +e.target.value }))}
+            />
+            </div>
+        )}
+</div>
+
   
         <div>
           <label className="block font-medium">Цвета</label>
