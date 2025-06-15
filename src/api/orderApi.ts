@@ -1,6 +1,6 @@
 import api from "@/api/base";
 import { getAuthHeader } from "./auth";
-import { type Order, type CreateOrderDto } from "@/types/models";
+import { type Order, type OrderStatus, type CreateOrderDto } from "@/types/models";
 
 export const fetchOrders = async (): Promise<Order[]> => {
   const res = await api.get("/orders", getAuthHeader());
@@ -22,4 +22,13 @@ export const updateOrder = async (id: number, data: Partial<Order>) => {
 
 export const deleteOrder = async (id: number) => {
   return await api.delete(`/orders/${id}`, getAuthHeader());
+};
+
+export const updateOrderStatus = async (orderId: number, statusId: number) => {
+  return await api.put(`/orders/${orderId}/status/${statusId}`, null, getAuthHeader());
+};
+
+export const fetchOrderStatuses = async (): Promise<OrderStatus[]> => {
+  const res = await api.get("/orders/statuses", getAuthHeader());
+  return res.data;
 };

@@ -41,7 +41,7 @@ export interface Image {
 
 export interface Order {
   id: number;
-  status: string;
+  statusId: number;
   userId: string;
   salonId: number;
   salonName: string;
@@ -58,7 +58,7 @@ export interface Order {
   }[];
 }
 export interface CreateOrderDto {
-  status: string;
+  statusId: number;
   userId: string;
   salonId: number;
   orderProducts: {
@@ -80,5 +80,12 @@ export interface User {
   phone: string;
   createdAt: string;
   role: string;
+}
+
+export interface OrderStatus {
+  id: number;
+  codeName: string;
+  readableName: string;
+  description?: string;
 }
 

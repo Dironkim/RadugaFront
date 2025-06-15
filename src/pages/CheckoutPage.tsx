@@ -37,7 +37,7 @@ export default function CheckoutPage() {
     if (!userId) return;
 
     const orderDto = {
-      status: "pending",
+      statusId: 2,
       userId,
       salonId: selectedSalonId,
       orderProducts: cartItems.map(item => ({
