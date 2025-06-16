@@ -7,6 +7,11 @@ export const fetchOrders = async (): Promise<Order[]> => {
   return res.data;
 };
 
+export const fetchUserOrders = async (userId: string): Promise<Order[]> => {
+  const res = await api.get(`/orders/user/${userId}`, getAuthHeader());
+  return res.data;
+}
+
 export const fetchOrder = async (id: number): Promise<Order> => {
   const res = await api.get(`/orders/${id}`, getAuthHeader());
   return res.data;

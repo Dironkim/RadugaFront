@@ -1,5 +1,3 @@
-// src/pages/ProfilePage.tsx
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -8,15 +6,18 @@ import { useAuth } from "@/context/AuthContext"
 
 export default function ProfilePage() {
   const { user, logout } = useAuth()
-
   const navigate = useNavigate()
 
   const handleChangePassword = () => {
     navigate("/change-password")
   }
 
+  const handleGoToOrders = () => {
+    navigate("/orders")
+  }
+
   return (
-    <div className="max-w-xl mx-auto p-6">
+    <div className="max-w-xl mx-auto p-6 space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>Личный кабинет</CardTitle>
@@ -34,16 +35,20 @@ export default function ProfilePage() {
             <label className="block text-sm font-medium mb-1">Телефон</label>
             <Input value={user.phone || ""} readOnly />
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
-            <Button onClick={handleChangePassword} variant="outline">
-              Сменить пароль
-            </Button>
-            <Button onClick={() => { logout(); navigate("/login") }} variant="secondary">
-              Выйти из аккаунта
-            </Button>
-          </div>
         </CardContent>
       </Card>
+      <div className="flex flex-col gap-3">
+      <Button className="w-full" onClick={handleGoToOrders}>
+        Мои заказы
+      </Button>
+      <Button onClick={handleChangePassword} variant="outline" className="w-full">
+        Сменить пароль
+      </Button>
+      <Button onClick={() => { logout(); navigate("/login") }} variant="secondary" className="w-full">
+        Выйти из аккаунта
+      </Button>
+    </div>
+
     </div>
   )
 }

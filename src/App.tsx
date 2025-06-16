@@ -20,6 +20,7 @@ import AdminOrdersPage from './pages/AdminOrdersPage'
 import ContactsPage from './pages/ContactsPage';
 import ThankYouPage from './pages/ThankYouPage';
 import NotFoundPage from './pages/NotFoundPage';
+import UserOrdersPage from './pages/UserOrdersPage';
 
 function App(): JSX.Element {
   return (
@@ -29,7 +30,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Catalog />} />
-              <Route path="/catalog" element={<Catalog />} />
+              <Route path="catalog" element={<Catalog />} />
               <Route path="cart" element={<CartPage />} />
               <Route path="product/:productId" element={<ProductPage />} />
               <Route path="register" element={<RegisterPage />} />
@@ -37,11 +38,12 @@ function App(): JSX.Element {
               <Route path="login" element={<LoginPage />} />
               <Route path="forgot-password" element={<ForgotPasswordPage />} />
               <Route path="profile" element={<ProfilePage/>}/>
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/contacts" element = {<ContactsPage/>}/>
-              <Route path="/thank-you" element = {<ThankYouPage/>}/>
+              <Route path="orders" element={<UserOrdersPage/>}/>
+              <Route path="checkout" element={<CheckoutPage />} />
+              <Route path="contacts" element = {<ContactsPage/>}/>
+              <Route path="thank-you" element = {<ThankYouPage/>}/>
               <Route
-                path="/admin"
+                path="admin"
                 element={
                   <RequireRole allowedRoles={["AdminDesigner"]}>
                     <AdminPanel />
@@ -49,7 +51,7 @@ function App(): JSX.Element {
                 }
               />
               <Route
-                path="/admin/orders"
+                path="admin/orders"
                 element={
                   <RequireRole allowedRoles={["AdminDesigner"]}>
                     <AdminOrdersPage/>
