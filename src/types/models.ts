@@ -47,6 +47,7 @@ export interface Order {
   salonName: string;
   createdAt: string;
   updatedAt: string;
+  pendingChange?: PendingOrderChange;
   orderProducts: {
     productId: number;
     productName: string;
@@ -57,6 +58,24 @@ export interface Order {
     height?: number;
   }[];
 }
+
+export interface PendingOrderChange {
+  id: number;
+  orderId: number;
+  updatedProducts: {
+    productId: number;
+    productName: string;
+    quantity: number;
+    currentPrice: number;
+    subtotal: number;
+    width?: number;
+    height?: number;
+  }[];
+  salonId: number;
+  salonName: string;
+  createdAt: string;
+}
+
 export interface CreateOrderDto {
   statusId: number;
   userId: string;

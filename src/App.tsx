@@ -21,6 +21,7 @@ import ContactsPage from './pages/ContactsPage';
 import ThankYouPage from './pages/ThankYouPage';
 import NotFoundPage from './pages/NotFoundPage';
 import UserOrdersPage from './pages/UserOrdersPage';
+import AdminEditOrderPage from './pages/AdminEditOrderPage';
 
 function App(): JSX.Element {
   return (
@@ -42,6 +43,7 @@ function App(): JSX.Element {
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="contacts" element = {<ContactsPage/>}/>
               <Route path="thank-you" element = {<ThankYouPage/>}/>
+              <Route path="orders/:orderId/edit" element={<AdminEditOrderPage />} />
               <Route
                 path="admin"
                 element={

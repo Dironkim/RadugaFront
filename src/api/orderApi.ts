@@ -37,3 +37,15 @@ export const fetchOrderStatuses = async (): Promise<OrderStatus[]> => {
   const res = await api.get("/orders/statuses", getAuthHeader());
   return res.data;
 };
+
+export const suggestOrderChanges = async (id: number, dto: any): Promise<void> => {
+  await api.put(`/orders/${id}/edit`, dto, getAuthHeader());
+};
+
+export const approveOrderChange = async (orderId: number, changeId: number): Promise<void> => {
+  await api.post(`/orders/${orderId}/approve-change/${changeId}`, null, getAuthHeader());
+};
+
+export const rejectOrderChange = async (orderId: number, changeId: number): Promise<void> => {
+  await api.post(`/orders/${orderId}/reject-change/${changeId}`, null, getAuthHeader());
+};
