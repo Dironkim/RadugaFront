@@ -108,3 +108,11 @@ export interface OrderStatus {
   description?: string;
 }
 
+export interface Message {
+  id: number
+  senderId: string
+  receiverId: string
+  text: string
+  sentAt: string
+  imageUrls: string[]
+}

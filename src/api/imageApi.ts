@@ -18,3 +18,8 @@ export const updateImage = async (productId: number, formData: FormData) => {
 export const deleteImage = async (imageId: number) => {
   return await api.delete(`/images/${imageId}`, getAuthHeader());
 };
+
+export const createUserImage = async (formData: FormData) => {
+  const response = await api.post("images/user/upload", formData, getAuthHeader());
+  return response.data as { id: number; imageUrl: string };
+};
