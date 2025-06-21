@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { HubConnection, HubConnectionState } from "@microsoft/signalr"
+import { HubConnectionState } from "@microsoft/signalr"
 import { getConnection } from "@/lib/utils"
 
 type UseChatConnectionOptions = {

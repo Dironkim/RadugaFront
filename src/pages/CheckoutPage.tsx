@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { createOrder } from "@/api/orderApi";
 import { fetchSalons } from "@/api/salonApi";
 import {type Salon} from "@/types/models";
+import { toast } from "sonner";
 
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
@@ -32,10 +33,17 @@ export default function CheckoutPage() {
 
   const handleConfirm = async () => {
     if (selectedSalonId === null) return;
-
+  
     const userId = localStorage.getItem("userId");
+    const userRole = localStorage.getItem("role"); // предполагается, что роль сохранена как "admin" или "user"
+  
     if (!userId) return;
-
+  
+    if (userRole === "AdminDesigner") {
+      toast.error("Оформлять заказ может только покупатель");
+      return;
+    }
+  
     const orderDto = {
       statusId: 2,
       userId,
@@ -46,9 +54,8 @@ export default function CheckoutPage() {
         width: item.requiresSize ? item.width : undefined,
         height: item.requiresSize ? item.height : undefined,
       })),
-      
     };
-
+  
     try {
       await createOrder(orderDto);
       clearCart();
@@ -57,6 +64,7 @@ export default function CheckoutPage() {
       console.error("Ошибка при оформлении заказа:", error);
     }
   };
+  
 
   return (
     <div className="p-6 space-y-6">

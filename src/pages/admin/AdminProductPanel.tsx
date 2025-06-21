@@ -20,7 +20,7 @@ import ProductForm from "@/my-components/AdminPanel/ProductForm"
 import {ImageCarousel} from "@/my-components/ImageCarousel"
 import { type Product, type Category, type Tag, type Color } from "@/types/models"
 
-export default function AdminPanel() {
+export default function AdminProductPanel() {
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [colors, setColors] = useState<Color[]>([])

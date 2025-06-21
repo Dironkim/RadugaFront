@@ -95,42 +95,49 @@ export default function CartPage() {
           
             <TableCell>{item.price.toFixed(2)} ₽</TableCell>
           
-            <TableCell>
-              <Input
-                type="number"
-                min={1}
-                value={item.quantity}
-                onChange={(e) => handleQuantityChange(e.target.value, item.id)}
-                className="w-20 mb-2"
-              />
-          
-              {item.requiresSize && (
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-muted-foreground">Ширина (м):</label>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={item.width ?? ""}
-                    onChange={(e) =>
-                      handleDimensionChange(item.id, "width", e.target.value)
-                    }
-                    className="w-24"
-                  />
-                  <label className="text-sm text-muted-foreground">Высота (м):</label>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={item.height ?? ""}
-                    onChange={(e) =>
-                      handleDimensionChange(item.id, "height", e.target.value)
-                    }
-                    className="w-24"
-                  />
-                </div>
-              )}
-            </TableCell>
+            <TableCell className="align-top">
+  <div className="flex flex-col gap-2">
+    <Input
+      type="number"
+      min={1}
+      value={item.quantity}
+      onChange={(e) => handleQuantityChange(e.target.value, item.id)}
+      className="w-24"
+    />
+
+    {item.requiresSize && (
+      <div className="flex flex-col gap-2">
+        <div>
+          <label className="text-sm text-muted-foreground">Ширина (м):</label>
+          <Input
+            type="number"
+            step="0.01"
+            min="0"
+            value={item.width ?? ""}
+            onChange={(e) =>
+              handleDimensionChange(item.id, "width", e.target.value)
+            }
+            className="w-24"
+          />
+        </div>
+        <div>
+          <label className="text-sm text-muted-foreground">Высота (м):</label>
+          <Input
+            type="number"
+            step="0.01"
+            min="0"
+            value={item.height ?? ""}
+            onChange={(e) =>
+              handleDimensionChange(item.id, "height", e.target.value)
+            }
+            className="w-24"
+          />
+        </div>
+      </div>
+    )}
+  </div>
+</TableCell>
+
           
             <TableCell>
               {item.price.toFixed(2)} ₽

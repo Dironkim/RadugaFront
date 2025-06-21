@@ -13,15 +13,19 @@ import { CartProvider } from './context/CartContext';
 import type { JSX } from 'react';
 import "./App.css";
 import { AuthProvider } from './context/AuthContext';
-import AdminPanel from './pages/AdminPanel';
+import AdminPanel from './pages/admin/AdminProductPanel';
 import { RequireRole } from "@/my-components/AdminPanel/RequireRole"
 import EmailConfirmationPage from './pages/auth/ConfirmEmailPage';
-import AdminOrdersPage from './pages/AdminOrdersPage'
+import AdminOrdersPage from './pages/admin/AdminOrdersPage'
 import ContactsPage from './pages/ContactsPage';
 import ThankYouPage from './pages/ThankYouPage';
 import NotFoundPage from './pages/NotFoundPage';
 import UserOrdersPage from './pages/UserOrdersPage';
-import AdminEditOrderPage from './pages/AdminEditOrderPage';
+import AdminEditOrderPage from './pages/admin/AdminEditOrderPage';
+import { ConversationsPage } from './pages/admin/ConversationsPage';
+import ChatPage from './pages/admin/ChatPage';
+import ChangePasswordPage from './pages/auth/ChangePasswordPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 
 function App(): JSX.Element {
   return (
@@ -35,33 +39,64 @@ function App(): JSX.Element {
               <Route path="cart" element={<CartPage />} />
               <Route path="product/:productId" element={<ProductPage />} />
               <Route path="register" element={<RegisterPage />} />
-              <Route path="confirm-email" element={<EmailConfirmationPage/>}/>
+              <Route path="confirm-email" element={<EmailConfirmationPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="forgot-password" element={<ForgotPasswordPage />} />
-              <Route path="profile" element={<ProfilePage/>}/>
-              <Route path="orders" element={<UserOrdersPage/>}/>
-              <Route path="checkout" element={<CheckoutPage />} />
-              <Route path="contacts" element = {<ContactsPage/>}/>
-              <Route path="thank-you" element = {<ThankYouPage/>}/>
-              <Route path="orders/:orderId/edit" element={<AdminEditOrderPage />} />
-              <Route
-                path="admin"
-                element={
-                  <RequireRole allowedRoles={["AdminDesigner"]}>
-                    <AdminPanel />
-                  </RequireRole>
-                }
-              />
-              <Route
-                path="admin/orders"
-                element={
-                  <RequireRole allowedRoles={["AdminDesigner"]}>
-                    <AdminOrdersPage/>
-                  </RequireRole>
-                }
-              /> 
+              <Route path="reset-password" element={<ResetPasswordPage />} />
+              <Route path="contacts" element={<ContactsPage />} />
+              <Route path="profile" element={
+                <RequireRole allowedRoles={["AdminDesigner", "Registered"]}>
+                  <ProfilePage />
+                </RequireRole>
+              } />
+              <Route path="orders" element={
+                <RequireRole allowedRoles={["AdminDesigner", "Registered"]}>
+                  <UserOrdersPage />
+                </RequireRole>
+              } />
+              <Route path="checkout" element={
+                <RequireRole allowedRoles={["AdminDesigner", "Registered"]}>
+                  <CheckoutPage />
+                </RequireRole>
+              } />
+              <Route path="thank-you" element={
+                <RequireRole allowedRoles={["AdminDesigner", "Registered"]}>
+                  <ThankYouPage />
+                </RequireRole>
+              } />
+              <Route path="/change-password" element={
+                <RequireRole allowedRoles={["AdminDesigner", "Registered"]}>
+                  <ChangePasswordPage />
+                </RequireRole>
+              } />
+              <Route path="admin/products" element={
+                <RequireRole allowedRoles={["AdminDesigner"]}>
+                  <AdminPanel />
+                </RequireRole>
+              } />
+              <Route path="admin/orders" element={
+                <RequireRole allowedRoles={["AdminDesigner"]}>
+                  <AdminOrdersPage />
+                </RequireRole>
+              } />
+              <Route path="/admin/chat/:userId" element={
+                <RequireRole allowedRoles={["AdminDesigner"]}>
+                  <ChatPage />
+                </RequireRole>
+              } />
+              <Route path="orders/:orderId/edit" element={
+                <RequireRole allowedRoles={["AdminDesigner"]}>
+                  <AdminEditOrderPage />
+                </RequireRole>
+              } />
+              <Route path="admin/conversations" element={
+                <RequireRole allowedRoles={["AdminDesigner"]}>
+                  <ConversationsPage />
+                </RequireRole>
+
+              } />
               <Route path="*" element={<NotFoundPage />} />
- 
+
             </Route>
           </Routes>
         </Router>

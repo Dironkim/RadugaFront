@@ -11,7 +11,7 @@ export default function Layout() {
   const hideCart = ["/login", "/register","/admin"].includes(pathname)
   const hideChat = ["/login", "/register","/admin"].includes(pathname)
   return (
-    <div className="mx-0 min-h-[1000px]">
+    <div className="mx-0 min-h-[1000px] lg:min-w-[1000px]">
       <Navbar />
       <main className="p-2 !w-full min-h-[1000px]">
         <Outlet />

@@ -16,7 +16,7 @@ export function useChatMessages(partnerId?: string) {
     if (connection.state === "Disconnected") {
       connection.start().catch(console.error)
     }
-  
+    console.log(isAdmin)
     connection.on("ReceiveMessage", handleReceive)
     connection.on("MessageSent", handleReceive)
   
@@ -32,6 +32,9 @@ export function useChatMessages(partnerId?: string) {
     return () => {
       connection.off("ReceiveMessage", handleReceive)
       connection.off("MessageSent", handleReceive)
+      if (connection.state === "Connected") {
+        connection.stop().catch(console.error) // <-- важно
+      }
     }
   }, [partnerId, user?.id])
   

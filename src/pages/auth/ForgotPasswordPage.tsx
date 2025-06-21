@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { forgotPassword } from "@/api/auth"
 
 const schema = z.object({
   email: z.string().email("Неверный email"),
@@ -26,21 +27,14 @@ export default function ForgotPasswordPage() {
   async function onSubmit(values: ForgotPasswordForm) {
     setError(null)
     try {
-      const res = await fetch("/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      })
-      if (!res.ok) {
-        const err = await res.json()
-        setError(err.message || "Ошибка отправки")
-        return
-      }
+      await forgotPassword(values)
       setSent(true)
-    } catch {
-      setError("Ошибка соединения с сервером")
+    } catch (err: any) {
+      const message = err?.response?.data?.message || "Ошибка отправки"
+      setError(message)
     }
   }
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-muted">

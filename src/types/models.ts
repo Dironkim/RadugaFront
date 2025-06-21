@@ -111,6 +111,7 @@ export interface OrderStatus {
 export interface Message {
   id: number
   senderId: string
+  senderName?: string
   receiverId: string
   text: string
   sentAt: string

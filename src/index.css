@@ -5,10 +5,16 @@
 
 :root {
   /* Базовая палитра */
-  --color-1:  #ffffff; 
+  /* --color-1:  #ffffff; 
   --color-2: #f2be5c; 
   --color-3:  #f25922; 
   --color-4: #f2a477;
+  --color-5: #f25050; 
+  --color-6: #592e46; */
+  --color-1:  #ffffff; 
+  --color-2: #000000; 
+  --color-3:  #000000; 
+  --color-4: #ba0303;
   --color-5: #f25050; 
   --color-6: #592e46;
 

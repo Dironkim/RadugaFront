@@ -41,3 +41,16 @@ export interface AuthResponse {
     }) => void
     logout: () => void
   }
+
+  export interface ChangePasswordRequest {
+    currentPassword: string
+    newPassword: string
+  }
+  export interface ForgotPasswordForm  {
+    email: string
+  }
+  export interface ResetPasswordRequest {
+    email: string
+    token: string
+    newPassword: string
+  }

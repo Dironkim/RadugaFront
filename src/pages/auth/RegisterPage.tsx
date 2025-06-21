@@ -68,10 +68,17 @@ export default function RegisterPage() {
 
       toast.success("Регистрация прошла успешно. Проверьте email для подтверждения.")
       navigate("/login", { replace: true })
-    } catch (error) {
+    } catch (error: any) {
       console.error("Ошибка регистрации", error)
-
-      toast.error("Ошибка регистрации. Проверьте данные или попробуйте позже.")
+    
+      const data = error?.response?.data
+      if (data?.errors?.length) {
+        data.errors.forEach((err: string) => toast.error(err))
+      } else if (data?.message) {
+        toast.error(data.message)
+      } else {
+        toast.error("Ошибка регистрации. Попробуйте позже.")
+      }
     } finally {
       setLoading(false)
     }

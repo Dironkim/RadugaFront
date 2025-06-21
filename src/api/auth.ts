@@ -1,5 +1,5 @@
 import api from "./base";
-import { type AuthRequest, type AuthResponse, type RegisterRequest } from "@/types/auth";
+import { type AuthRequest, type AuthResponse, type RegisterRequest, type ChangePasswordRequest, type ForgotPasswordForm, type ResetPasswordRequest } from "@/types/auth";
 
 
 export const register = async (payload: RegisterRequest): Promise<AuthResponse> => {
@@ -20,3 +20,13 @@ export const getAuthHeader = () => {
     }
   };
 };
+
+export const changePassword = async (payload: ChangePasswordRequest): Promise<void> => {
+  await api.post("/auth/change-password", payload, getAuthHeader())
+}
+export const forgotPassword = async (payload: ForgotPasswordForm): Promise<void> => {
+  await api.post("/auth/forgot-password", payload)
+}
+export const resetPassword = async (payload: ResetPasswordRequest): Promise<void> => {
+  await api.post("/auth/reset-password", payload)
+}
